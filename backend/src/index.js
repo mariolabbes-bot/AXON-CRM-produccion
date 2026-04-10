@@ -55,16 +55,22 @@ const runEmergencyMigration = async () => {
     client.release();
   }
 };
-runEmergencyMigration();
+// MIGRACIÓN AUTOMÁTICA DESACTIVADA PARA AXON CRM (Esquema limpio)
+// runEmergencyMigration();
+
 console.log('✅ NUEVO: Widget ImportStats + endpoint /api/import-stats/stats');
 
-// Iniciar Workers en el mismo proceso (para deployments simples en Render)
-try {
-  require('./worker');
-  require('./workers/importBullWorker'); // Force start import worker
-  console.log('✅ [Main] Workers in-process iniciados correctamente');
-} catch (err) {
-  console.error('❌ [Main] Error al iniciar Workers:', err);
+// Iniciar Workers si Redis está presente
+if (process.env.REDIS_URL) {
+  try {
+    require('./worker');
+    require('./workers/importBullWorker'); 
+    console.log('✅ [Main] Workers in-process iniciados correctamente');
+  } catch (err) {
+    console.error('⚠️ [Main] Error al iniciar Workers (probablemente falta Redis):', err.message);
+  }
+} else {
+  console.log('ℹ️ [Main] REDIS_URL no detectada. Iniciando sin Workers (Colas Bull desactivadas).');
 }
 
 // Cargar diccionarios en memoria
