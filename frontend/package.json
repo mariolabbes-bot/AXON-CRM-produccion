@@ -41,5 +41,8 @@
     "kill-port": "^2.0.1",
     "style-loader": "^4.0.0",
     "webpack-dev-server": "^5.2.2"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
