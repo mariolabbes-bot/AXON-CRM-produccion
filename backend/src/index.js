@@ -90,10 +90,15 @@ app.listen(PORT, HOST, () => {
   // Iniciar keep-alive service para evitar que Render se duerma
   startKeepAlive();
 
-  // Iniciar Google Drive Watcher (Importación Automática)
+  // Iniciar Google Drive Watcher (Importación Automática) si existen credenciales
   try {
-    const { startScheduler } = require('./services/importAutomation');
-    startScheduler();
+    const fs = require('fs');
+    if (fs.existsSync(path.join(__dirname, '../google_drive_credentials.json'))) {
+      const { startScheduler } = require('./services/importAutomation');
+      startScheduler();
+    } else {
+      console.log('ℹ️ [DriveBot] No se detectó google_drive_credentials.json. Automatización de Drive desactivada.');
+    }
   } catch (err) {
     console.error('❌ Error iniciando Drive Automation:', err);
   }
