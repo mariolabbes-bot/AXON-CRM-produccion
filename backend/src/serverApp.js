@@ -1,4 +1,4 @@
-console.log('Iniciando CRM2 Backend en modo:', process.env.NODE_ENV);
+console.log('Iniciando AXON CRM Backend en modo:', process.env.NODE_ENV);
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
@@ -73,7 +73,7 @@ app.use('/api/circuits', require('./routes/circuits')); // Maestro de Circuitos
 app.get('/', (req, res) => {
   res.json({
     status: 'ok',
-    message: 'CRM2 Backend API v4.2 (Normalización & GPS)',
+    message: 'AXON CRM Backend API v1.0 (Normalización & GPS)',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString()
   });
