@@ -11,6 +11,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
       'https://crm2-produccion.vercel.app',
+      'https://axon.vani-digital.com',
       'http://localhost:3000',
       'http://127.0.0.1:3000'
     ];
